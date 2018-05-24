@@ -3,9 +3,11 @@
 class Conexion
 {
     private $con;
+
     private $dns = 'mysql:host=localhost;dbname=red_social';
-    private $user = 'root';
+    private $user = 'red_social';
     private $pass = '12345';
+
     public function __construct()
     {
     }
@@ -78,7 +80,9 @@ class Conexion
 
     public function ejecutar($sql, $params = [])
     {
-        if (strpos($sql, 'select ') === 0) {
+        if (strpos($sql, 'select count') === 0) {
+            return $this->select($sql, $params)[0][0];
+        } else if (strpos($sql, 'select ') === 0) {
             return $this->select($sql, $params);
         } else if (strpos($sql, 'update ') === 0 || strpos($sql, 'delete ') === 0) {
             return $this->alter($sql, $params);
